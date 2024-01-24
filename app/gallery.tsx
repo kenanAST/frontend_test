@@ -11,18 +11,17 @@ import {
 
 import Modal from "./modal";
 
+import useFetchUserData from "./hooks/useFetchUser";
 import { User } from "./types/user";
 
-export type GalleryProps = {
-  users: User[];
-};
-const Gallery = ({ users }: GalleryProps) => {
-  const [usersList, setUsersList] = useState(users);
+const Gallery = () => {
+  const { users, loading, error } = useFetchUserData();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = (id: number) => {
-    const user = usersList.find((item) => item.id === id) || null;
+    const user = users.find((item: User) => item.id === id) || null;
+
 
     if(user) {
       setSelectedUser(user);
@@ -38,8 +37,10 @@ const Gallery = ({ users }: GalleryProps) => {
   return (
     <div className="user-gallery">
       <h1 className="heading">Users</h1>
+      {loading && <p>Loading users...</p>}
+      {error && <p>{error.toString()}</p>}
       <div className="items">
-        {usersList.map((user, index) => (
+        {users.map((user: User, index) => (
           <div
             className="item user-card"
             key={index}
