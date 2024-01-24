@@ -1,13 +1,17 @@
 .user-gallery {
-  width: 100%;
-
   > .items {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-gap: 16px;
+    white-space: nowrap;
+
+    @media screen and (min-width: 481.1px) {
+      grid-template-columns: 1fr 1fr;
+    }
 
     @media screen and (min-width: 768.1px) {
+      white-space: normal;
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
